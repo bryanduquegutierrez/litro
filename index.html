@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Litro App – Ahorra en cada repostaje</title>
+  <meta name="description" content="Encuentra gasolineras baratas, parkings cercanos y calcula la ruta más económica para tus viajes por España.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #1f2937; background: #ffffff; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
+      color: #fff;
+      text-align: center;
+      padding: 80px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0; right: 0;
+      height: 60px;
+      background: #fff;
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .hero-logo {
+      width: 80px; height: 80px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .hero h1 { font-size: 42px; font-weight: 900; letter-spacing: -1px; margin-bottom: 12px; }
+    .hero p { font-size: 18px; opacity: 0.9; max-width: 500px; margin: 0 auto 32px; line-height: 1.6; }
+    .badge-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .store-badge {
+      height: 52px;
+      border-radius: 12px;
+      transition: transform 0.2s;
+    }
+    .store-badge:hover { transform: scale(1.05); }
+
+    /* ── Screenshots ── */
+    .screenshots {
+      padding: 80px 24px;
+      text-align: center;
+      background: #f9fafb;
+    }
+    .section-tag {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0284c7;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .section-sub {
+      font-size: 16px;
+      color: #6b7280;
+      max-width: 560px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+    }
+    .screenshot-scroll {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .screenshot-card {
+      flex: 0 0 auto;
+      width: 220px;
+      text-align: center;
+    }
+    .screenshot-card img {
+      width: 100%;
+      border-radius: 24px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      transition: transform 0.3s;
+    }
+    .screenshot-card img:hover { transform: translateY(-8px); }
+    .screenshot-label {
+      margin-top: 16px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    /* ── Features ── */
+    .features {
+      padding: 80px 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .feature-card {
+      background: #f9fafb;
+      border-radius: 20px;
+      padding: 32px 28px;
+      border: 1px solid #f3f4f6;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    }
+    .feature-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+    .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: #6b7280; line-height: 1.6; }
+
+    /* ── How it works ── */
+    .how-it-works {
+      padding: 80px 24px;
+      background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+      color: #fff;
+      text-align: center;
+    }
+    .how-it-works .section-tag { background: rgba(255,255,255,0.15); color: #fff; }
+    .how-it-works .section-title { color: #fff; }
+    .how-it-works .section-sub { color: rgba(255,255,255,0.8); }
+    .steps {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .step {
+      flex: 1;
+      min-width: 200px;
+      max-width: 240px;
+    }
+    .step-number {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 800;
+      margin: 0 auto 16px;
+    }
+    .step h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: 14px; opacity: 0.85; line-height: 1.5; }
+
+    /* ── CTA ── */
+    .cta {
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .cta .section-title { margin-bottom: 12px; }
+    .cta .section-sub { margin-bottom: 32px; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 32px 24px;
+      text-align: center;
+      border-top: 1px solid #f3f4f6;
+      color: #9ca3af;
+      font-size: 13px;
+    }
+    .footer a { color: #0284c7; }
+    .footer-links { margin-bottom: 8px; }
+    .footer-links a { margin: 0 12px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 16px; }
+      .section-title { font-size: 26px; }
+      .screenshot-card { width: 160px; }
+      .screenshot-card img { border-radius: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img src="icon.png" alt="Litro App" class="hero-logo">
+    <h1>Litro App</h1>
+    <p>Encuentra gasolineras baratas, parkings cercanos y calcula la ruta mas economica para tus viajes por Espana.</p>
+    <div class="badge-row">
+      <a href="https://apps.apple.com/app/id6761688926" target="_blank">
+        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/es-es?size=250x83" alt="Descargar en App Store" class="store-badge">
+      </a>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section class="screenshots">
+    <span class="section-tag">Asi se ve</span>
+    <h2 class="section-title">Todo lo que necesitas como conductor</h2>
+    <p class="section-sub">Precios de combustible, parkings, mapa interactivo y planificador de rutas en una sola app.</p>
+    <div class="screenshot-scroll">
+      <div class="screenshot-card">
+        <img src="screen-gasolineras.png" alt="Gasolineras">
+        <p class="screenshot-label">Gasolineras</p>
+      </div>
+      <div class="screenshot-card">
+        <img src="screen-parkings.png" alt="Parkings">
+        <p class="screenshot-label">Parkings</p>
+      </div>
+      <div class="screenshot-card">
+        <img src="screen-mapa.png" alt="Mapa">
+        <p class="screenshot-label">Mapa y ruta</p>
+      </div>
+      <div class="screenshot-card">
+        <img src="screen-ruta.png" alt="Ruta optima">
+        <p class="screenshot-label">Ruta optima</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div style="text-align: center;">
+      <span class="section-tag">Funcionalidades</span>
+      <h2 class="section-title">Ahorra en cada kilometro</h2>
+      <p class="section-sub">Litro te da la informacion que necesitas, cuando la necesitas.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background: #fef3c7;">&#9981;</div>
+        <h3>Precios en tiempo real</h3>
+        <p>Compara precios de Gasolina 95, Gasolina 98 y Diesel en miles de estaciones de servicio en toda Espana.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: #dbeafe;">&#127359;</div>
+        <h3>Parkings cercanos</h3>
+        <p>Encuentra parkings con nombre, direccion y distancia exacta. Navega hasta ellos con un solo toque.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: #d1fae5;">&#9889;</div>
+        <h3>Ruta optima</h3>
+        <p>Introduce tu destino y Litro calcula donde repostar mas barato a lo largo de tu ruta, ahorrando combustible y dinero.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: #fce7f3;">&#11088;</div>
+        <h3>Favoritos</h3>
+        <p>Guarda tus gasolineras y parkings preferidos para acceder a ellos al instante cuando los necesites.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: #e0e7ff;">&#127760;</div>
+        <h3>Mapa interactivo</h3>
+        <p>Visualiza gasolineras y parkings en el mapa. Filtra por tipo y toca cualquier marcador para navegar.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: #f3e8ff;">&#9881;</div>
+        <h3>Personalizable</h3>
+        <p>Configura tu combustible por defecto, radio de busqueda, tema oscuro o claro y registra tu vehiculo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how-it-works">
+    <span class="section-tag">Como funciona</span>
+    <h2 class="section-title">Tres pasos para ahorrar</h2>
+    <p class="section-sub">Planifica tu viaje y encuentra la gasolinera mas barata en tu ruta.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Elige tu destino</h3>
+        <p>Escribe la ciudad a la que viajas y selecciona el tipo de combustible.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Calcula la ruta</h3>
+        <p>Litro analiza miles de gasolineras y encuentra la combinacion mas economica.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Navega y ahorra</h3>
+        <p>Toca la mejor opcion y navega directamente con Google Maps o Apple Maps.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2 class="section-title">Empieza a ahorrar hoy</h2>
+    <p class="section-sub">Descarga Litro gratis y encuentra el mejor precio en tu proximo repostaje.</p>
+    <div class="badge-row">
+      <a href="https://apps.apple.com/app/id6761688926" target="_blank">
+        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/es-es?size=250x83" alt="Descargar en App Store" class="store-badge">
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="privacy-policy.html">Politica de Privacidad</a>
+      <a href="mailto:litroesp@gmail.com">Contacto</a>
+    </div>
+    <p>&copy; 2025 Litro App. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
